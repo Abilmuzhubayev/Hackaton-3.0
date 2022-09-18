@@ -24,4 +24,21 @@ public class OperatorService {
         List<Route> routes = operatorDao.getArrivalRoutes(id);
         return routeConverter.getDtoList(routes);
     }
+
+    @Transactional
+    public List<RouteCardDto> getDepartureRoutes(Long id) {
+        List<Route> routes = operatorDao.getDepartureRoutes(id);
+        return routeConverter.getDtoList(routes);
+    }
+
+    @Transactional
+    public void validateArrival(Long operatorId, Long routeId) {
+        operatorDao.validateArrival(operatorId, routeId);
+    }
+
+    @Transactional
+    public void validateDeparture(Long operatorId, Long routeId) {
+        operatorDao.validateDeparture(operatorId, routeId);
+
+    }
 }
