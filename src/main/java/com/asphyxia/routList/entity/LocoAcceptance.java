@@ -23,7 +23,6 @@ public class LocoAcceptance {
     @Column(name = "electric_counter")
     private Double electricCounter;
 
-    @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "status_id")
-    private Status status;
+    @Column(name = "status")
+    private String status;
 }

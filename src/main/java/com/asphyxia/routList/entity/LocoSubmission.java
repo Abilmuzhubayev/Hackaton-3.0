@@ -47,9 +47,8 @@ public class LocoSubmission {
             inverseJoinColumns = @JoinColumn(name = "speed_id"))
     private List<TechSpeed> techSpeeds;
 
-    @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "status_id")
-    private Status status;
+    @Column(name = "status")
+    private String status;
 
     public List<Long> getSafetyIds() {
         List<Long> safetyIds = new ArrayList<>();

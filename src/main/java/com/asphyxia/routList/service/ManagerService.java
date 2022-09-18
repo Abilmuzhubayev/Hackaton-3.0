@@ -126,7 +126,6 @@ public class ManagerService {
     public void saveRoute(CreateRouteDto createRouteDto) {
         Manager manager = managerDao.getManagerById(createRouteDto.getManagerId());
         Driver driver = managerDao.getDriverById(createRouteDto.getDriverId());
-        Status status = new Status();
 
         List<CreateStationDataDto> createStationDataDtoList = createRouteDto.getStationDataDtoList();
         CreateStationDataDto departureDataDto = createStationDataDtoList.get(0);
@@ -139,23 +138,23 @@ public class ManagerService {
         route.setDriver(driver);
         route.setDepartureStation(departureStation);
         route.setDestinationStation(destinationStation);
-        route.setStatus(status);
+        route.setStatus(Status.inFuture);
 
         // locoAcceptance
         LocoAcceptance locoAcceptance = new LocoAcceptance();
-        locoAcceptance.setStatus(new Status());
+        locoAcceptance.setStatus(Status.inFuture);
 
         // locoSubmission
         LocoSubmission locoSubmission = new LocoSubmission();
-        locoSubmission.setStatus(new Status());
+        locoSubmission.setStatus(Status.inFuture);
 
         // arrival subtask
         Subtask arrivalSubtask = new Subtask();
-        arrivalSubtask.setStatus(new Status());
+        arrivalSubtask.setStatus(Status.inFuture);
 
         // finish subtask
         Subtask finishSubtask = new Subtask();
-        finishSubtask.setStatus(new Status());
+        finishSubtask.setStatus(Status.inFuture);
 
         // List<Subtask>
         List<Subtask> subtaskList = new ArrayList<>();
@@ -172,7 +171,7 @@ public class ManagerService {
             stationData.setStation(station);
             stationData.setArrivalTime(dto.getArrivalTime());
             stationData.setDepartureTime(dto.getDepartureTime());
-            stationData.setStatus(new Status());
+            stationData.setStatus(Status.inFuture);
             stationData.setOrderNumber(orderNumber);
 //            stationData.setWeightNetto();
 //            stationData.setWeightBrutto();

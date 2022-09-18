@@ -25,8 +25,7 @@ public class Subtask {
     @Column(name = "time")
     private Timestamp time;
 
-    @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "status_id")
-    private Status status;
+    @Column(name = "status")
+    private String status;
 
 }

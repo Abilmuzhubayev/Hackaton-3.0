@@ -43,9 +43,8 @@ public class Route {
     @JoinColumn(name = "destination_id", referencedColumnName = "station_id")
     private Station destinationStation;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "status_id", referencedColumnName = "status_id")
-    private Status status;
+    @Column(name = "status")
+    private String status;
 
     public List<StationData> getStationDataList() {
         return plan.getStationDataList();
