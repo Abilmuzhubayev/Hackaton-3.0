@@ -37,6 +37,18 @@ public class DriverDao {
         entityManager.merge(subtask);
     }
 
+    public Status getStatusById(Long id) {
+        return entityManager.find(Status.class, id);
+    }
+
+    public Station getStationById(Long id) {
+        return entityManager.find(Station.class, id);
+    }
+
+    public void saveStationData(StationData stationData) {
+        entityManager.merge(stationData);
+    }
+
     public List<FuelConsumption> getFuelConsumptionById(List<Long> consumptionsId) {
         Query query = entityManager.createQuery("select s from FuelConsumption s where s.id in (:l)");
         query.setParameter("l", consumptionsId);
@@ -46,6 +58,12 @@ public class DriverDao {
         Query query = entityManager.createQuery("select s from TechSpeed s where s.id in (:l)");
         query.setParameter("l", speedsId);
         return (List<TechSpeed>) query.getResultList();
+    }
+
+    public Long getRouteIdByDriverId(Long driverId) {
+        String sql = "select route_id from route where driver_id = ?1";
+        Long routeId = (Long) entityManager.createNativeQuery(sql).setParameter(1, driverId).getSingleResult();
+        return routeId;
     }
 
 }

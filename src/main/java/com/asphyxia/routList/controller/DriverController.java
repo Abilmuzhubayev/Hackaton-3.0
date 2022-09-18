@@ -1,15 +1,15 @@
 package com.asphyxia.routList.controller;
 
-import com.asphyxia.routList.dto.LocoAcceptanceDto;
-import com.asphyxia.routList.dto.LocoSubmissionDto;
-import com.asphyxia.routList.dto.OperationResult;
-import com.asphyxia.routList.dto.SubtaskDto;
+import com.asphyxia.routList.dto.*;
 import com.asphyxia.routList.entity.LocoSubmission;
 import com.asphyxia.routList.service.DriverService;
+import com.asphyxia.routList.service.ManagerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/driver")
@@ -18,6 +18,9 @@ public class DriverController {
 
     @Autowired
     DriverService driverService;
+
+    @Autowired
+    ManagerService managerService;
 
     @PostMapping("/saveLocoAcceptance")
     public ResponseEntity<OperationResult> saveLocoAcceptance(LocoAcceptanceDto locoAcceptanceDto) {
@@ -66,6 +69,39 @@ public class DriverController {
         }
         return ResponseEntity.ok(operationResult);
     }
+
+    @PostMapping("/saveStationData")
+    public ResponseEntity<OperationResult> saveStationData(StationDataDto saveStationDto) {
+        OperationResult operationResult = new OperationResult();
+        try {
+            driverService.saveStationData(saveStationDto);
+            operationResult.setIsSuccess(Boolean.TRUE);
+            operationResult.setMessage("Информация о работе на станции успешно сохранена.");
+        } catch (Exception e) {
+            log.error("Exception in saveLocoAcceptance: ", e);
+            operationResult.setIsSuccess(Boolean.FALSE);
+            operationResult.setMessage("Возникла ошибка при сохранении информации о работе на станции.");
+            return ResponseEntity.internalServerError().body(operationResult);
+        }
+        return ResponseEntity.ok(operationResult);
+    }
+
+    @GetMapping("/getTasks/{id}")
+    public List<TaskDto> getRouteTasks(@PathVariable("id") Long driverId) {
+        Long routeId = driverService.getRouteIdByDriverId(driverId);
+        return managerService.getRouteTasks(routeId);
+    }
+
+    @GetMapping("/getLocoSubmissions/{id}")
+    public LocoSubmissionDto getLocoSubmission(@PathVariable("id") Long id) {
+        return managerService.getLocoSubmission(id);
+    }
+
+    @GetMapping("/getSubtask/{id}")
+    public SubtaskDto getSubtask(@PathVariable("id") Long subtaskId) {
+        return managerService.getRouteSubtask(subtaskId);
+    }
+
 
 
 }

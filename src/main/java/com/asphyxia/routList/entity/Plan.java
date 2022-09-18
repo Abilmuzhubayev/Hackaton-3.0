@@ -26,9 +26,9 @@ public class Plan {
     @JoinColumn(name = "loco_submission_id", referencedColumnName = "loco_submission_id")
     private LocoSubmission locoSubmission;
 
-    @OneToMany(mappedBy = "plan")
+    @OneToMany(mappedBy = "plan", fetch = FetchType.EAGER)
     private List<Subtask> subtaskList;
 
-    @OneToMany(mappedBy = "plan")
+    @OneToMany(mappedBy = "plan", fetch = FetchType.EAGER)
     private List<StationData> stationDataList;
 }
