@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.swing.text.html.parser.Entity;
+import java.math.BigInteger;
 import java.util.List;
 
 @Repository
@@ -13,17 +14,13 @@ public class UserDao {
     @Autowired
     private EntityManager entityManager;
 
-    public List<Object> getUserByLogin(String userName) {
-        String sql = "select user_id, first_name, last_name, role, password from user where user.username = ?1";
-        List<Object> resultList = entityManager.createNativeQuery(sql).getResultList();
-        return resultList;
+    public User getUserByLogin(String userName) {
+
+        String sql = "select u from User u where u.userName = ?1";
+        User user = (User) entityManager.createQuery(sql).setParameter(1, userName).getSingleResult();
+        return user;
     }
 
-    public String getRoleByRoleId(Long roleId) {
-        String sql = "select name from role where id = ?1";
-        String roleName = (String) entityManager.createNativeQuery(sql).setParameter(1, roleId).getSingleResult();
-        return roleName;
-    }
 
     public Long getManagerIdByUserId (Long userId){
         String sql = "select manager_id from manager inner join user on user.user_id = manager.user_id where user.user_id = ?1";
@@ -39,8 +36,8 @@ public class UserDao {
 
     public Long getDriverIdByUserId(Long userId){
         String sql = "select driver_id from driver inner join user on user.user_id = driver.user_id where user.user_id = ?1";
-        Long driverId = (Long) entityManager.createNativeQuery(sql).setParameter(1, userId).getSingleResult();
-        return driverId;
+        BigInteger driverId = (BigInteger) entityManager.createNativeQuery(sql).setParameter(1, userId).getSingleResult();
+        return driverId.longValue();
     }
 
 }

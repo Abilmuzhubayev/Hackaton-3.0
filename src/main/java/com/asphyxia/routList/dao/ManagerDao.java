@@ -16,8 +16,8 @@ public class ManagerDao {
     private EntityManager entityManager;
 
     public List<Route> getRoutes(Long id) {
-        String sql = "select * from route where manager_id = ?1";
-        return entityManager.createNativeQuery(sql).setParameter(1, id).getResultList();
+        String sql = "select route from Route route, Manager manager where manager.id = ?1";
+        return entityManager.createQuery(sql).setParameter(1, id).getResultList();
     }
 
     public Route getRoute(Long routeId) {

@@ -2,10 +2,12 @@ package com.asphyxia.routList.service;
 
 import com.asphyxia.routList.converters.LocoAcceptanceConverter;
 import com.asphyxia.routList.converters.LocoSubmissionConverter;
+import com.asphyxia.routList.converters.StationDataConverter;
 import com.asphyxia.routList.converters.SubtaskConverter;
 import com.asphyxia.routList.dao.DriverDao;
 import com.asphyxia.routList.dto.LocoAcceptanceDto;
 import com.asphyxia.routList.dto.LocoSubmissionDto;
+import com.asphyxia.routList.dto.StationDataDto;
 import com.asphyxia.routList.dto.SubtaskDto;
 import com.asphyxia.routList.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class DriverService {
     @Autowired
     SubtaskConverter subtaskConverter;
 
+    @Autowired
+    StationDataConverter stationDataConverter;
+
    @Transactional
     public void saveLocoAcceptance(LocoAcceptanceDto locoAcceptanceDto) {
         LocoAcceptance locoAcceptance = LocoAcceptanceConverter.getEntity(locoAcceptanceDto);
@@ -35,9 +40,13 @@ public class DriverService {
     @Transactional
     public void saveLocoSubmission(LocoSubmissionDto locoSubmissionDto) {
        LocoSubmission locoSubmission = locoSubmissionCoverter.getEntity(locoSubmissionDto);
+       locoSubmission.setSafetyPrecautions(getSafetyPrecautionsById(locoSubmissionDto.getPrecautionsId()));
+       locoSubmission.setFuelConsumptions(getFuelConsumptionsById(locoSubmissionDto.getConsumptionsId()));
+       locoSubmission.setTechSpeeds(getTechSpeedsById(locoSubmissionDto.getSpeedsId()));
        driverDao.saveLocoSubmission(locoSubmission);
     }
 
+    @Transactional
     public void saveSubtask(SubtaskDto subtaskDto, Long planId) {
        Subtask subtask = subtaskConverter.getEntity(subtaskDto);
        Plan plan = driverDao.getPlanById(planId);
@@ -45,13 +54,25 @@ public class DriverService {
        driverDao.saveSubtask(subtask);
     }
 
+    @Transactional
+    public void saveStationData(StationDataDto stationDataDto) {
+       StationData stationData = stationDataConverter.getEntity(stationDataDto);
+       driverDao.saveStationData(stationData);
+    }
 
+
+    @Transactional
     public Plan getPlanById(Long id) {
        return driverDao.getPlanById(id);
     }
     @Transactional
     public List<SafetyPrecaution> getSafetyPrecautionsById(List<Long> id) {
        return driverDao.getSafetyPrecautionById(id);
+    }
+
+    @Transactional
+    public Long getRouteIdByDriverId(Long driverId) {
+       return driverDao.getRouteIdByDriverId(driverId);
     }
 
     @Transactional

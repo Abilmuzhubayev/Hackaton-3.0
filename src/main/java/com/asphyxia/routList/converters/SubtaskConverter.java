@@ -9,9 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class SubtaskConverter {
 
-    @Autowired
-    DriverService driverService;
-
     public Subtask getEntity(SubtaskDto subtaskDto) {
         Subtask subtask = new Subtask();
         subtask.setId(subtaskDto.getId());

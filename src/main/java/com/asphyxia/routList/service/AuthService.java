@@ -18,17 +18,17 @@ public class AuthService {
 
     @Transactional
     public LoginResponse login(String userName, String password) {
-        List<Object> resultList = userDao.getUserByLogin(userName);
+        User user = userDao.getUserByLogin(userName);
         LoginResponse loginResponse = new LoginResponse();
 
-        if (resultList != null && !resultList.isEmpty()) {
-            Long userId = (Long) resultList.get(0);
-            String firstName = (String) resultList.get(1);
-            String lastName = (String) resultList.get(2);
-            Long roleId = (Long) resultList.get(3);
-            String userPassword = (String) resultList.get(4);
+        if (user != null) {
+            Long userId = user.getId();
+            String firstName = user.getFirstname();
+            String lastName = user.getLastname();
+            Long roleId = user.getRole().getId();
+            String userPassword = user.getPassword();
             if (userPassword.equals(password)) {
-                loginResponse = createSuccessfulLogin(roleId, userId, firstName, lastName);
+                loginResponse = createSuccessfulLogin(userId, firstName, lastName, user.getRole().getName());
             }
         } else {
             loginResponse.setIsSuccess(false);
@@ -39,10 +39,9 @@ public class AuthService {
 
 
     @Transactional
-    public LoginResponse createSuccessfulLogin(Long roleId, Long userId, String firstName, String lastName) {
+    public LoginResponse createSuccessfulLogin(Long userId, String firstName, String lastName, String roleName) {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setIsSuccess(true);
-        String roleName = userDao.getRoleByRoleId(roleId);
         loginResponse.setRole(roleName);
         if ("manager".equals(roleName)) {
             loginResponse.setId(userDao.getManagerIdByUserId(userId));

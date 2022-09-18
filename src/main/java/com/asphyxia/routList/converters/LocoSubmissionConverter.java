@@ -8,19 +8,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LocoSubmissionConverter {
-
-    @Autowired
-    DriverService driverService;
-
     public LocoSubmission getEntity(LocoSubmissionDto locoSubmissionDto) {
         LocoSubmission locoSubmission = new LocoSubmission();
         locoSubmission.setId(locoSubmissionDto.getId());
         locoSubmission.setTime(locoSubmissionDto.getTime());
         locoSubmission.setElectricCounter(locoSubmissionDto.getElectricCounter());
         locoSubmission.setRecuperationCounter(locoSubmissionDto.getRecuperationCounter());
-        locoSubmission.setSafetyPrecautions(driverService.getSafetyPrecautionsById(locoSubmissionDto.getPrecautionsId()));
-        locoSubmission.setFuelConsumptions(driverService.getFuelConsumptionsById(locoSubmissionDto.getConsumptionsId()));
-        locoSubmission.setTechSpeeds(driverService.getTechSpeedsById(locoSubmissionDto.getSpeedsId()));
         return locoSubmission;
     }
 
