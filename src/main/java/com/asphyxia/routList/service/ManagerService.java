@@ -37,14 +37,16 @@ public class ManagerService {
 
     @Transactional
     public List<RouteCardDto> getRoutes(Long managerId) {
-        List<Route> routes = managerDao.getRoutes(managerId);
+        Manager manager = managerDao.getManagerById(managerId);
+
+        List<Route> routes = manager.getRouteList();
         List<RouteCardDto> routeCardDtos = new ArrayList<>();
         for (Route route : routes) {
             RouteCardDto routeCardDto = routeConverter.getDto(route);
-            routeCardDto.setDepartureTime(managerDao.getDepartureTime(route.getId()));
-            routeCardDto.setDriverName(managerDao.getDriverName(route.getId()));
-            routeCardDto.setDestinationStation(managerDao.getDestinationStation(route.getId()));
-            routeCardDto.setDepartureStation(managerDao.getDepartureStation(route.getId()));
+            routeCardDto.setDepartureTime(route.getStartTime());
+            routeCardDto.setDriverName(route.getDriver().getUser().getName());
+            routeCardDto.setDestinationStation(route.getDestinationStation().getName());
+            routeCardDto.setDepartureStation(route.getDepartureStation().getName());
             routeCardDtos.add(routeCardDto);
         }
         return routeCardDtos;
@@ -110,11 +112,13 @@ public class ManagerService {
     @Transactional
     public RouteDetailsDto getRouteDetails(Long routeId) {
         RouteDetailsDto routeDetailsDto = new RouteDetailsDto();
-        routeDetailsDto.setDriverName(managerDao.getDriverName(routeId));
-        routeDetailsDto.setDepartureName(managerDao.getDepartureStation(routeId));
-        routeDetailsDto.setDepartureTime(managerDao.getDepartureTime(routeId));
-        routeDetailsDto.setDestinationName(managerDao.getDestinationStation(routeId));
-        routeDetailsDto.setDestinationTime(managerDao.getDestinationTime(routeId));
+        Route route = managerDao.getRoute(routeId);
+
+        routeDetailsDto.setDriverName(route.getDriver().getUser().getName());
+        routeDetailsDto.setDepartureName(route.getDepartureStation().getName());
+        routeDetailsDto.setDepartureTime(route.getStartTime());
+        routeDetailsDto.setDestinationName(route.getDestinationStation().getName());
+        routeDetailsDto.setDestinationTime(route.getEndTime());
         return routeDetailsDto;
     }
 
@@ -196,7 +200,7 @@ public class ManagerService {
         List<Driver> drivers = managerDao.getDrivers();
         List<DriverDto> driverDtoList = new ArrayList<>();
         for (Driver driver : drivers) {
-            String driverName = managerDao.getDriverNameByDriverId(driver.getId());
+            String driverName = driver.getUser().getName();
             DriverDto driverDto = driverConverter.getDto(driver, driverName);
             driverDtoList.add(driverDto);
         }

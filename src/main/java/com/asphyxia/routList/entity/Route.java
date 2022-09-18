@@ -3,6 +3,8 @@ package com.asphyxia.routList.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Data
@@ -44,5 +46,22 @@ public class Route {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private Status status;
+
+    public List<StationData> getStationDataList() {
+        return plan.getStationDataList();
+    }
+
+    public StationData getStationDatByOrder(Integer order) {
+        List<StationData> list = getStationDataList();
+        return list.get((order < 1 ? list.size() - 1 : order));
+    }
+
+    public Timestamp getStartTime() {
+        return getStationDatByOrder(1).getDepartureTime();
+    }
+
+    public Timestamp getEndTime() {
+        return getStationDatByOrder(0).getArrivalTime();
+    }
 
 }
