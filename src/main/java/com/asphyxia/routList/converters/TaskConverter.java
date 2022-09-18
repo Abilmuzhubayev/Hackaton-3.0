@@ -45,6 +45,13 @@ public class TaskConverter {
         taskDto.setTaskId(stationData.getId());
         taskDto.setTaskCategory("StationData");
         taskDto.setName("Станция " + stationData.getStation().getName());
+
+        if (stationData.getOrderNumber() == 1) {
+            taskDto.setTime(stationData.getDepartureTime());
+        } else {
+            taskDto.setTime(stationData.getArrivalTime());
+        }
+
         taskDto.setStatus(stationData.getStatus());
         return taskDto;
     }
