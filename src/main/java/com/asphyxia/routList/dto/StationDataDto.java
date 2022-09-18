@@ -15,7 +15,6 @@ public class StationDataDto {
     private Double weightBrutto;
     private Integer cisterns;
     private Integer axesComposition;
-    private Long statusId;
     private String statusName;
     private Integer orderNumber;
 }

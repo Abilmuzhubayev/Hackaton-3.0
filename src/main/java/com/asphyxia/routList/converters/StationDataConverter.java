@@ -28,8 +28,7 @@ public class StationDataConverter {
         stationDataDto.setWeightBrutto(stationData.getWeightBrutto());
         stationDataDto.setCisterns(stationData.getCisterns());
         stationDataDto.setAxesComposition(stationData.getAxesComposition());
-        stationDataDto.setStatusId(stationData.getStatus().getId());
-        stationDataDto.setStatusName(stationData.getStatus().getStatusDescription());
+        stationDataDto.setStatusName(stationData.getStatus());
         stationDataDto.setOrderNumber(stationData.getOrderNumber());
         return stationDataDto;
     }
