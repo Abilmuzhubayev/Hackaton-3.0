@@ -16,30 +16,30 @@ public class Route {
     @Column(name = "route_id")
     private Long id;
 
-    @OneToOne(mappedBy = "route")
+    @OneToOne(mappedBy = "route", cascade = CascadeType.ALL)
     private Plan plan;
 
     @ManyToOne
     @JoinColumn(name = "manager_id", referencedColumnName = "manager_id")
     private Manager manager;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "driver_id", referencedColumnName = "driver_id")
     private Driver driver;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "in_operator_id", referencedColumnName = "operator_id")
     private Operator inOperator;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "out_operator_id", referencedColumnName = "operator_id")
     private Operator outOperator;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "departure_id", referencedColumnName = "station_id")
     private Station departureStation;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "destination_id", referencedColumnName = "station_id")
     private Station destinationStation;
 
