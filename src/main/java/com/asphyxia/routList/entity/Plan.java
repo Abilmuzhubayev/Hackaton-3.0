@@ -3,6 +3,7 @@ package com.asphyxia.routList.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,4 +21,7 @@ public class Plan {
     @OneToOne
     @JoinColumn(name = "loco_submission_id", referencedColumnName = "loco_submission_id")
     private LocoSubmission locoSubmission;
+
+    @OneToMany(mappedBy = "plan_id")
+    List<Subtask> subtaskList;
 }
