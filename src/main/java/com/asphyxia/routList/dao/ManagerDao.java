@@ -1,10 +1,11 @@
 package com.asphyxia.routList.dao;
 
-import com.asphyxia.routList.entity.Route;
+import com.asphyxia.routList.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -58,5 +59,44 @@ public class ManagerDao {
         return name + " " + surname;
     }
 
+    public Subtask getSubtask(Long id) {
+        return entityManager.find(Subtask.class, id);
+    }
+
+    public StationData getStationData(Long id) {
+        return entityManager.find(StationData.class, id);
+    }
+
+    public LocoSubmission getLocoSubmission(Long id) {
+        return entityManager.find(LocoSubmission.class, id);
+    }
+
+    public LocoAcceptance getLocoAcceptance(Long id) {
+        return entityManager.find(LocoAcceptance.class, id);
+    }
+
+    public String getDriverNameByDriverId(Long driverId) {
+        String sql = "select user.first_name as name, user.last_name as surname from user inner join driver on driver.user_id = user.user_id where driver.driver_id = ?1";
+        List<Object> resultList = entityManager.createNativeQuery(sql).setParameter(1, driverId).getResultList();
+        String name = (String) resultList.get(0);
+        String surname = (String) resultList.get(1);
+        return name + " " + surname;
+    }
+
+    public List<Driver> getDrivers() {
+        Query query = entityManager.createQuery(" from Driver");
+        List<Driver> drivers = query.getResultList();
+        return drivers;
+    }
+
+    public List<Station> getStations() {
+        Query query = entityManager.createQuery(" from Station");
+        List<Station> stations = query.getResultList();
+        return stations;
+    }
+
+    public void saveRoute(Route route) {
+        entityManager.merge(route);
+    }
 
 }
