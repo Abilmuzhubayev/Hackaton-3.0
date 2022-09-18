@@ -14,6 +14,10 @@ public class LocoAcceptance {
     @Column(name = "loco_acceptance_id")
     private Long id;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
+    private Plan plan;
+
     @Column(name = "time")
     private Timestamp time;
 

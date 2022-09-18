@@ -23,23 +23,23 @@ public class Route {
     @JoinColumn(name = "manager_id", referencedColumnName = "manager_id")
     private Manager manager;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "driver_id")
     private Driver driver;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "in_operator_id", referencedColumnName = "operator_id")
     private Operator inOperator;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "out_operator_id", referencedColumnName = "operator_id")
     private Operator outOperator;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "departure_id", referencedColumnName = "station_id")
     private Station departureStation;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "destination_id", referencedColumnName = "station_id")
     private Station destinationStation;
 
@@ -50,17 +50,17 @@ public class Route {
         return plan.getStationDataList();
     }
 
-    public StationData getStationDatByOrder(Integer order) {
+    public StationData getStationDateByOrder(Integer order) {
         List<StationData> list = getStationDataList();
         return list.get((order < 1 ? list.size() - 1 : order - 1));
     }
 
     public Timestamp getStartTime() {
-        return getStationDatByOrder(1).getDepartureTime();
+        return getStationDateByOrder(1).getDepartureTime();
     }
 
     public Timestamp getEndTime() {
-        return getStationDatByOrder(0).getArrivalTime();
+        return getStationDateByOrder(0).getArrivalTime();
     }
 
 }
