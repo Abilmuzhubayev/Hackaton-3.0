@@ -91,6 +91,7 @@ public class DriverController {
     @GetMapping("/getTasks/{id}")
     public List<TaskDto> getRouteTasks(@PathVariable("id") Long driverId) {
         Long routeId = driverService.getRouteIdByDriverId(driverId);
+        System.out.println(routeId);
         return managerService.getRouteTasks(routeId);
     }
 

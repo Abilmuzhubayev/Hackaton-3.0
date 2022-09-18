@@ -43,6 +43,12 @@ public class Route {
     @JoinColumn(name = "destination_id", referencedColumnName = "station_id")
     private Station destinationStation;
 
+    @Column(name = "departure_time")
+    private Timestamp departureTime;
+
+    @Column(name = "destination_time")
+    private Timestamp destinationTime;
+
     @Column(name = "status")
     private String status;
 
@@ -53,14 +59,6 @@ public class Route {
     public StationData getStationDateByOrder(Integer order) {
         List<StationData> list = getStationDataList();
         return list.get((order < 1 ? list.size() - 1 : order - 1));
-    }
-
-    public Timestamp getStartTime() {
-        return getStationDateByOrder(1).getDepartureTime();
-    }
-
-    public Timestamp getEndTime() {
-        return getStationDateByOrder(0).getArrivalTime();
     }
 
 }

@@ -3,10 +3,12 @@ package com.asphyxia.routList.dao;
 import com.asphyxia.routList.dto.LocoAcceptanceDto;
 import com.asphyxia.routList.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.sql.ResultSet;
 import java.util.List;
 
 @Repository
@@ -14,6 +16,9 @@ public class DriverDao {
 
     @Autowired
     private EntityManager entityManager;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public void saveLocoAcceptance(LocoAcceptance locoAcceptance) {
         entityManager.merge(locoAcceptance);
@@ -61,8 +66,13 @@ public class DriverDao {
     }
 
     public Long getRouteIdByDriverId(Long driverId) {
-        String sql = "select route_id from route where driver_id = ?1";
-        Long routeId = (Long) entityManager.createNativeQuery(sql).setParameter(1, driverId).getSingleResult();
+        String sql = "select route_id as route_id from route where driver_id = ? order by departure_time limit 1";
+        Long routeId = jdbcTemplate.query(sql, resultSet -> {
+            if (resultSet.next()) {
+                return resultSet.getLong("route_id");
+            }
+            return null;
+        }, driverId);
         return routeId;
     }
 

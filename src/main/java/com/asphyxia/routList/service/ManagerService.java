@@ -112,9 +112,9 @@ public class ManagerService {
 
         routeDetailsDto.setDriverName(route.getDriver().getUser().getName());
         routeDetailsDto.setDepartureName(route.getDepartureStation().getName());
-        routeDetailsDto.setDepartureTime(route.getStartTime());
+        routeDetailsDto.setDepartureTime(route.getDepartureTime());
         routeDetailsDto.setDestinationName(route.getDestinationStation().getName());
-        routeDetailsDto.setDestinationTime(route.getEndTime());
+        routeDetailsDto.setDestinationTime(route.getDestinationTime());
         routeDetailsDto.setStopsCount(route.getStationDataList().size());
         return routeDetailsDto;
     }
