@@ -14,8 +14,7 @@ public class Route {
     @Column(name = "route_id")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
+    @OneToOne(mappedBy = "route")
     private Plan plan;
 
     @ManyToOne
