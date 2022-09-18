@@ -34,7 +34,7 @@ public class TaskConverter {
         if (subtask.getCategory().equals("arrival")) {
             taskDto.setName("Явка на работу");
         } else {
-            taskDto.setName("завершение работы");
+            taskDto.setName("Завершение работы");
         }
         taskDto.setStatus(subtask.getStatus());
         return taskDto;
