@@ -43,10 +43,6 @@ public class ManagerService {
         List<RouteCardDto> routeCardDtos = new ArrayList<>();
         for (Route route : routes) {
             RouteCardDto routeCardDto = routeConverter.getDto(route);
-            routeCardDto.setDepartureTime(route.getStartTime());
-            routeCardDto.setDriverName(route.getDriver().getUser().getName());
-            routeCardDto.setDestinationStation(route.getDestinationStation().getName());
-            routeCardDto.setDepartureStation(route.getDepartureStation().getName());
             routeCardDtos.add(routeCardDto);
         }
         return routeCardDtos;
