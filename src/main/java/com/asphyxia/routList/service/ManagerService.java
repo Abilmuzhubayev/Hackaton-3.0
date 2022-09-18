@@ -140,6 +140,9 @@ public class ManagerService {
         route.setDestinationStation(destinationStation);
         route.setStatus(Status.inFuture);
 
+        //Plan
+        Plan plan = new Plan();
+
         // locoAcceptance
         LocoAcceptance locoAcceptance = new LocoAcceptance();
         locoAcceptance.setStatus(Status.inFuture);
@@ -151,10 +154,14 @@ public class ManagerService {
         // arrival subtask
         Subtask arrivalSubtask = new Subtask();
         arrivalSubtask.setStatus(Status.inFuture);
+        arrivalSubtask.setPlan(plan);
+        arrivalSubtask.setCategory("arrival");
 
         // finish subtask
         Subtask finishSubtask = new Subtask();
         finishSubtask.setStatus(Status.inFuture);
+        finishSubtask.setPlan(plan);
+        finishSubtask.setCategory("finish");
 
         // List<Subtask>
         List<Subtask> subtaskList = new ArrayList<>();
@@ -172,6 +179,7 @@ public class ManagerService {
             stationData.setArrivalTime(dto.getArrivalTime());
             stationData.setDepartureTime(dto.getDepartureTime());
             stationData.setStatus(Status.inFuture);
+            stationData.setPlan(plan);
             stationData.setOrderNumber(orderNumber);
 //            stationData.setWeightNetto();
 //            stationData.setWeightBrutto();
@@ -183,7 +191,6 @@ public class ManagerService {
         }
 
         // plan
-        Plan plan = new Plan();
         plan.setRoute(route);
         plan.setLocoAcceptance(locoAcceptance);
         plan.setLocoSubmission(locoSubmission);

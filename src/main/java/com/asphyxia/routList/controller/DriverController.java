@@ -2,6 +2,7 @@ package com.asphyxia.routList.controller;
 
 import com.asphyxia.routList.dto.*;
 import com.asphyxia.routList.entity.LocoSubmission;
+import com.asphyxia.routList.entity.StationData;
 import com.asphyxia.routList.service.DriverService;
 import com.asphyxia.routList.service.ManagerService;
 import lombok.extern.slf4j.Slf4j;
@@ -92,7 +93,7 @@ public class DriverController {
         return managerService.getRouteTasks(routeId);
     }
 
-    @GetMapping("/getLocoSubmissions/{id}")
+    @GetMapping("/getLocoSubmission/{id}")
     public LocoSubmissionDto getLocoSubmission(@PathVariable("id") Long id) {
         return managerService.getLocoSubmission(id);
     }
@@ -101,6 +102,17 @@ public class DriverController {
     public SubtaskDto getSubtask(@PathVariable("id") Long subtaskId) {
         return managerService.getRouteSubtask(subtaskId);
     }
+
+    @GetMapping("getLocoAcceptance/{id}")
+    public LocoAcceptanceDto getLocoAcceptance(@PathVariable("id") Long id) {
+        return managerService.getLocoAcceptance(id);
+    }
+
+    @GetMapping("getStationData/{id}")
+    public StationDataDto getStationData(@PathVariable("id") Long id) {
+        return managerService.getStationData(id);
+    }
+
 
 
 

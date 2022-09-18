@@ -52,7 +52,7 @@ public class Route {
 
     public StationData getStationDatByOrder(Integer order) {
         List<StationData> list = getStationDataList();
-        return list.get((order < 1 ? list.size() - 1 : order));
+        return list.get((order < 1 ? list.size() - 1 : order - 1));
     }
 
     public Timestamp getStartTime() {

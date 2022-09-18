@@ -9,7 +9,7 @@ public class StationDataConverter {
 
     public StationData getEntity(StationDataDto stationDataDto) {
         StationData stationData = new StationData();
-        stationData.setId(stationData.getId());
+        stationData.setId(stationDataDto.getId());
         stationData.setCisterns(stationDataDto.getCisterns());
         stationData.setArrivalTime(stationDataDto.getArrivalTime());
         stationData.setDepartureTime(stationDataDto.getDepartureTime());
@@ -19,6 +19,7 @@ public class StationDataConverter {
 
     public StationDataDto getDto(StationData stationData) {
         StationDataDto stationDataDto = new StationDataDto();
+        stationDataDto.setId(stationData.getId());
         stationDataDto.setPlanId(stationData.getPlan().getId());
         stationDataDto.setStationId(stationData.getStation().getId());
         stationDataDto.setStationName(stationData.getStation().getName());
