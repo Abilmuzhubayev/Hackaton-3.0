@@ -15,6 +15,10 @@ public class Plan {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "route_id", referencedColumnName = "route_id")
+    private Route route;
+
+    @OneToOne
     @JoinColumn(name = "local_acceptance_id", referencedColumnName = "loco_acceptance_id")
     private LocoAcceptance locoAcceptance;
 
@@ -22,6 +26,9 @@ public class Plan {
     @JoinColumn(name = "loco_submission_id", referencedColumnName = "loco_submission_id")
     private LocoSubmission locoSubmission;
 
-    @OneToMany(mappedBy = "plan_id")
-    List<Subtask> subtaskList;
+    @OneToMany(mappedBy = "plan")
+    private List<Subtask> subtaskList;
+
+    @OneToMany(mappedBy = "plan")
+    private List<StationData> stationDataList;
 }
