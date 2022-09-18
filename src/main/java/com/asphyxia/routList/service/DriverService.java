@@ -5,6 +5,7 @@ import com.asphyxia.routList.converters.LocoSubmissionConverter;
 import com.asphyxia.routList.converters.StationDataConverter;
 import com.asphyxia.routList.converters.SubtaskConverter;
 import com.asphyxia.routList.dao.DriverDao;
+import com.asphyxia.routList.dao.ManagerDao;
 import com.asphyxia.routList.dto.LocoAcceptanceDto;
 import com.asphyxia.routList.dto.LocoSubmissionDto;
 import com.asphyxia.routList.dto.StationDataDto;
@@ -34,6 +35,8 @@ public class DriverService {
    @Transactional
     public void saveLocoAcceptance(LocoAcceptanceDto locoAcceptanceDto) {
         LocoAcceptance locoAcceptance = LocoAcceptanceConverter.getEntity(locoAcceptanceDto);
+       System.out.println("\n\n\n" + locoAcceptanceDto + "\n\n\n");
+        locoAcceptance.setPlan(driverDao.getPlanById(locoAcceptanceDto.getPlanId()));
         driverDao.saveLocoAcceptance(locoAcceptance);
     }
 
@@ -49,6 +52,7 @@ public class DriverService {
     @Transactional
     public void saveSubtask(SubtaskDto subtaskDto) {
        Subtask subtask = subtaskConverter.getEntity(subtaskDto);
+       subtask.setPlan(driverDao.getPlanById(subtaskDto.getPlanId()));
        driverDao.saveSubtask(subtask);
     }
 
@@ -57,7 +61,6 @@ public class DriverService {
        StationData stationData = stationDataConverter.getEntity(stationDataDto);
        driverDao.saveStationData(stationData);
     }
-
 
     @Transactional
     public Plan getPlanById(Long id) {

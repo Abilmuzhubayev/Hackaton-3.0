@@ -9,4 +9,6 @@ public class LocoAcceptanceDto {
     private Timestamp time;
     private Double recuperationCounter;
     private Double electricCounter;
+    private String status;
+    private Long planId;
 }

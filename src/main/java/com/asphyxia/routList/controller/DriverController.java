@@ -25,7 +25,7 @@ public class DriverController {
     ManagerService managerService;
 
     @PostMapping("/saveLocoAcceptance")
-    public ResponseEntity<OperationResult> saveLocoAcceptance(LocoAcceptanceDto locoAcceptanceDto) {
+    public ResponseEntity<OperationResult> saveLocoAcceptance(@RequestBody LocoAcceptanceDto locoAcceptanceDto) {
         OperationResult operationResult = new OperationResult();
         try {
             driverService.saveLocoAcceptance(locoAcceptanceDto);
@@ -41,7 +41,7 @@ public class DriverController {
     }
 
     @PostMapping("/saveLocoSubmission")
-    public ResponseEntity<OperationResult> saveLocoSubmission(LocoSubmissionDto locoSubmissionDto) {
+    public ResponseEntity<OperationResult> saveLocoSubmission(@RequestBody LocoSubmissionDto locoSubmissionDto) {
         OperationResult operationResult = new OperationResult();
         try {
             driverService.saveLocoSubmission(locoSubmissionDto);
@@ -73,7 +73,7 @@ public class DriverController {
     }
 
     @PostMapping("/saveStationData")
-    public ResponseEntity<OperationResult> saveStationData(StationDataDto saveStationDto) {
+    public ResponseEntity<OperationResult> saveStationData(@RequestBody StationDataDto saveStationDto) {
         OperationResult operationResult = new OperationResult();
         try {
             driverService.saveStationData(saveStationDto);
