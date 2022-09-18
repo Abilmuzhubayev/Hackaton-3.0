@@ -6,6 +6,9 @@ import com.asphyxia.routList.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class SubtaskConverter {
 
@@ -24,5 +27,9 @@ public class SubtaskConverter {
         subtaskDto.setPlanId(subtask.getPlan().getId());
         subtaskDto.setTime(subtaskDto.getTime());
         return subtaskDto;
+    }
+
+    public List<SubtaskDto> getAllMessagesDTO(List<Subtask> messages) {
+        return messages.stream().map(x -> getDto(x)).collect(Collectors.toList());
     }
 }
