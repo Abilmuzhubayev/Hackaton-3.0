@@ -115,6 +115,7 @@ public class ManagerService {
         routeDetailsDto.setDepartureTime(route.getStartTime());
         routeDetailsDto.setDestinationName(route.getDestinationStation().getName());
         routeDetailsDto.setDestinationTime(route.getEndTime());
+        routeDetailsDto.setStopsCount(route.getStationDataList().size());
         return routeDetailsDto;
     }
 
