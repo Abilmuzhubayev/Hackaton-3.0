@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 public class LocoSubmission {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "loco_submission_id")
     private Long id;
 
