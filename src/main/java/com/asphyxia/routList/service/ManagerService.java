@@ -142,10 +142,12 @@ public class ManagerService {
         // locoAcceptance
         LocoAcceptance locoAcceptance = new LocoAcceptance();
         locoAcceptance.setStatus(Status.inFuture);
+        locoAcceptance.setPlan(plan);
 
         // locoSubmission
         LocoSubmission locoSubmission = new LocoSubmission();
         locoSubmission.setStatus(Status.inFuture);
+        locoSubmission.setPlan(plan);
 
         // arrival subtask
         Subtask arrivalSubtask = new Subtask();

@@ -15,7 +15,7 @@ public class Subtask {
     @Column(name = "subtask_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
     private Plan plan;
 

@@ -20,6 +20,7 @@ public class AuthService {
     public LoginResponse login(String userName, String password) {
         User user = userDao.getUserByLogin(userName);
         LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setIsSuccess(false);
 
         if (user != null) {
             Long userId = user.getId();
@@ -30,8 +31,6 @@ public class AuthService {
             if (userPassword.equals(password)) {
                 loginResponse = createSuccessfulLogin(userId, firstName, lastName, user.getRole().getName());
             }
-        } else {
-            loginResponse.setIsSuccess(false);
         }
 
         return loginResponse;
