@@ -30,21 +30,25 @@ public class LocoSubmission {
             name = "submission_precaution",
             joinColumns = @JoinColumn(name = "submission_id"),
             inverseJoinColumns = @JoinColumn(name = "precaution_id"))
-    List<SafetyPrecaution> safetyPrecautions;
+    private List<SafetyPrecaution> safetyPrecautions;
 
     @ManyToMany
     @JoinTable(
             name = "submission_consumption",
             joinColumns = @JoinColumn(name = "submission_id"),
             inverseJoinColumns = @JoinColumn(name = "consumption_id"))
-    List<FuelConsumption> fuelConsumptions;
+    private List<FuelConsumption> fuelConsumptions;
 
     @ManyToMany
     @JoinTable(
             name = "submission_speeds",
             joinColumns = @JoinColumn(name = "submission_id"),
             inverseJoinColumns = @JoinColumn(name = "speed_id"))
-    List<TechSpeed> techSpeeds;
+    private List<TechSpeed> techSpeeds;
+
+    @ManyToOne
+    @JoinColumn(name = "status_id", referencedColumnName = "status_id")
+    private Status status;
 
     public List<Long> getSafetyIds() {
         List<Long> safetyIds = new ArrayList<>();
