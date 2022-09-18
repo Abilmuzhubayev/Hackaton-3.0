@@ -1,8 +1,13 @@
 package com.asphyxia.routList.converters;
 
 import com.asphyxia.routList.dto.StationDataDto;
+import com.asphyxia.routList.dto.SubtaskDto;
 import com.asphyxia.routList.entity.StationData;
+import com.asphyxia.routList.entity.Subtask;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class StationDataConverter {
@@ -32,6 +37,10 @@ public class StationDataConverter {
         stationDataDto.setStatusName(stationData.getStatus());
         stationDataDto.setOrderNumber(stationData.getOrderNumber());
         return stationDataDto;
+    }
+
+    public List<StationDataDto> getAllMessagesDTO(List<StationData> messages) {
+        return messages.stream().map(x -> getDto(x)).collect(Collectors.toList());
     }
 
 }

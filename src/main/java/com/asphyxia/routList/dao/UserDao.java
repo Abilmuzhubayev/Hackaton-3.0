@@ -24,14 +24,14 @@ public class UserDao {
 
     public Long getManagerIdByUserId (Long userId){
         String sql = "select manager_id from manager inner join user on user.user_id = manager.user_id where user.user_id = ?1";
-        Long managerId = (Long) entityManager.createNativeQuery(sql).setParameter(1, userId).getSingleResult();
-        return managerId;
+        BigInteger managerId = (BigInteger) entityManager.createNativeQuery(sql).setParameter(1, userId).getSingleResult();
+        return managerId.longValue();
     }
 
     public Long getOperatorIdByUserId(Long userId){
         String sql = "select operator_id from operator inner join user on user.user_id = operator.user_id where user.user_id = ?1";
-        Long operatorId = (Long) entityManager.createNativeQuery(sql).setParameter(1, userId).getSingleResult();
-        return operatorId;
+        BigInteger operatorId = (BigInteger) entityManager.createNativeQuery(sql).setParameter(1, userId).getSingleResult();
+        return operatorId.longValue();
     }
 
     public Long getDriverIdByUserId(Long userId){
