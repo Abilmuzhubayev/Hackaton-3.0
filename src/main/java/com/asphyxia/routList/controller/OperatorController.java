@@ -39,10 +39,8 @@ public class OperatorController {
     }
 
     @PostMapping("/validateArrival")
-    public void validateArrival(HttpServletRequest request) {
+    public void validateArrival(@RequestParam(name = "operatorId") Long operatorId, @RequestParam(name = "routeId") Long routeId) {
         try {
-            Long operatorId = Long.parseLong(request.getParameter("operatorId"));
-            Long routeId = Long.parseLong(request.getParameter("routeId"));
             operatorService.validateArrival(operatorId, routeId);
         } catch (Exception e) {
             log.error("Exception in validateArrival: ", e);
@@ -50,10 +48,8 @@ public class OperatorController {
     }
 
     @PostMapping("/validateDeparture")
-    public void validateDeparture(HttpServletRequest request) {
+    public void validateDeparture(@RequestParam(name = "operatorId") Long operatorId, @RequestParam(name = "routeId") Long routeId) {
         try {
-            Long operatorId = Long.parseLong(request.getParameter("operatorId"));
-            Long routeId = Long.parseLong(request.getParameter("routeId"));
             operatorService.validateDeparture(operatorId, routeId);
         } catch (Exception e) {
             log.error("Exception in validateDeparture: ", e);
