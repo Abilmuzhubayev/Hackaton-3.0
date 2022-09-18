@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,4 +45,28 @@ public class LocoSubmission {
             joinColumns = @JoinColumn(name = "submission_id"),
             inverseJoinColumns = @JoinColumn(name = "speed_id"))
     List<TechSpeed> techSpeeds;
+
+    public List<Long> getSafetyIds() {
+        List<Long> safetyIds = new ArrayList<>();
+        for (SafetyPrecaution safetyPrecaution : safetyPrecautions) {
+            safetyIds.add(safetyPrecaution.getId());
+        }
+        return safetyIds;
+    }
+
+    public List<Long> getConsumptionIds() {
+        List<Long> consumptionIds = new ArrayList<>();
+        for (TechSpeed techSpeed : techSpeeds) {
+            consumptionIds.add(techSpeed.getId());
+        }
+        return consumptionIds;
+    }
+
+    public List<Long> getSpeedIds() {
+        List<Long> techSpeedIds = new ArrayList<>();
+        for (TechSpeed techSpeed : techSpeeds) {
+            techSpeedIds.add(techSpeed.getId());
+        }
+        return techSpeedIds;
+    }
 }
