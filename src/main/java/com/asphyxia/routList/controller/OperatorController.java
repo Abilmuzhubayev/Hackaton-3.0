@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,38 @@ public class OperatorController {
             log.error("Exception in getRoutesForOperator: ", e);
         }
         return null;
+    }
+
+    @GetMapping("/getDepartureRoutes/{id}")
+    public List<RouteCardDto> getDepartureRoutes(@PathVariable("id") Long id) {
+        try {
+            return operatorService.getDepartureRoutes(id);
+        } catch (Exception e) {
+            log.error("Exception in getRoutesForOperator: ", e);
+        }
+        return null;
+    }
+
+    @PostMapping("/validateArrival")
+    public void validateArrival(HttpServletRequest request) {
+        try {
+            Long operatorId = Long.parseLong(request.getParameter("operatorId"));
+            Long routeId = Long.parseLong(request.getParameter("routeId"));
+            operatorService.validateArrival(operatorId, routeId);
+        } catch (Exception e) {
+            log.error("Exception in validateArrival: ", e);
+        }
+    }
+
+    @PostMapping("/validateDeparture")
+    public void validateDeparture(HttpServletRequest request) {
+        try {
+            Long operatorId = Long.parseLong(request.getParameter("operatorId"));
+            Long routeId = Long.parseLong(request.getParameter("routeId"));
+            operatorService.validateDeparture(operatorId, routeId);
+        } catch (Exception e) {
+            log.error("Exception in validateDeparture: ", e);
+        }
     }
 
 }
