@@ -99,6 +99,10 @@ public class ManagerDao {
         entityManager.merge(route);
     }
 
+    public void savePlan(Plan plan) {
+        entityManager.merge(plan);
+    }
+
     public Manager getManagerById(Long id) {
         return entityManager.find(Manager.class, id);
     }

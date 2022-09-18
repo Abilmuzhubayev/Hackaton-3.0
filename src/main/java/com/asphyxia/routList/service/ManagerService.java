@@ -191,8 +191,7 @@ public class ManagerService {
         plan.setSubtaskList(subtaskList);
         plan.setStationDataList(stationDataList);
 
-
-
+        route.setPlan(plan);
         managerDao.saveRoute(route);
     }
 
