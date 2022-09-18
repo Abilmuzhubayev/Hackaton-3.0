@@ -127,7 +127,6 @@ public class ManagerService {
         Manager manager = managerDao.getManagerById(createRouteDto.getManagerId());
         Driver driver = managerDao.getDriverById(createRouteDto.getDriverId());
         Status status = new Status();
-        status.setStatusDescription(Status.inFuture);
 
         List<CreateStationDataDto> createStationDataDtoList = createRouteDto.getStationDataDtoList();
         CreateStationDataDto departureDataDto = createStationDataDtoList.get(0);
@@ -191,6 +190,8 @@ public class ManagerService {
         plan.setLocoSubmission(locoSubmission);
         plan.setSubtaskList(subtaskList);
         plan.setStationDataList(stationDataList);
+
+
 
         managerDao.saveRoute(route);
     }
