@@ -17,4 +17,5 @@ public class StationDataDto {
     private Integer axesComposition;
     private Long statusId;
     private String statusName;
+    private Integer orderNumber;
 }

@@ -120,11 +120,87 @@ public class ManagerService {
 
     @Transactional
     public void saveRoute(CreateRouteDto createRouteDto) {
+        Manager manager = managerDao.getManagerById(createRouteDto.getManagerId());
+        Driver driver = managerDao.getDriverById(createRouteDto.getDriverId());
+        Status status = new Status();
+        status.setStatusDescription(Status.inFuture);
+
+        List<CreateStationDataDto> createStationDataDtoList = createRouteDto.getStationDataDtoList();
+        CreateStationDataDto departureDataDto = createStationDataDtoList.get(0);
+        CreateStationDataDto destinationDataDto = createStationDataDtoList.get(createStationDataDtoList.size() - 1);
+        Station departureStation = managerDao.getStationById(departureDataDto.getStationId());
+        Station destinationStation = managerDao.getStationById(destinationDataDto.getStationId());
+
+        Route route = new Route();
+        route.setManager(manager);
+        route.setDriver(driver);
+        route.setDepartureStation(departureStation);
+        route.setDestinationStation(destinationStation);
+        route.setStatus(status);
+
+        // locoAcceptance
+        LocoAcceptance locoAcceptance = new LocoAcceptance();
+        locoAcceptance.setStatus(new Status());
+
+        // locoSubmission
+        LocoSubmission locoSubmission = new LocoSubmission();
+        locoSubmission.setStatus(new Status());
+
+        // arrival subtask
+        Subtask arrivalSubtask = new Subtask();
+        arrivalSubtask.setStatus(new Status());
+
+        // finish subtask
+        Subtask finishSubtask = new Subtask();
+        finishSubtask.setStatus(new Status());
+
+        // List<Subtask>
+        List<Subtask> subtaskList = new ArrayList<>();
+        subtaskList.add(arrivalSubtask);
+        subtaskList.add(finishSubtask);
+
+        // List<StationData>
+        List<StationData> stationDataList = new ArrayList<>();
+        Integer orderNumber = 1;
+        for (CreateStationDataDto dto : createStationDataDtoList) {
+            Station station = managerDao.getStationById(dto.getStationId());
+
+            StationData stationData = new StationData();
+            stationData.setStation(station);
+            stationData.setArrivalTime(dto.getArrivalTime());
+            stationData.setDepartureTime(dto.getDepartureTime());
+            stationData.setStatus(new Status());
+            stationData.setOrderNumber(orderNumber);
+//            stationData.setWeightNetto();
+//            stationData.setWeightBrutto();
+//            stationData.setCisterns();
+//            stationData.setAxesComposition();
+
+            stationDataList.add(stationData);
+            orderNumber++;
+        }
+
+        // plan
+        Plan plan = new Plan();
+        plan.setRoute(route);
+        plan.setLocoAcceptance(locoAcceptance);
+        plan.setLocoSubmission(locoSubmission);
+        plan.setSubtaskList(subtaskList);
+        plan.setStationDataList(stationDataList);
+
+        managerDao.saveRoute(route);
     }
 
     @Transactional
     public List<DriverDto> getDrivers() {
-        return managerDao.getDrivers().stream().map(x -> driverConverter.getDto(x)).collect(Collectors.toList());
+        List<Driver> drivers = managerDao.getDrivers();
+        List<DriverDto> driverDtoList = new ArrayList<>();
+        for (Driver driver : drivers) {
+            String driverName = managerDao.getDriverNameByDriverId(driver.getId());
+            DriverDto driverDto = driverConverter.getDto(driver, driverName);
+            driverDtoList.add(driverDto);
+        }
+        return driverDtoList;
     }
 
     @Transactional

@@ -99,4 +99,16 @@ public class ManagerDao {
         entityManager.merge(route);
     }
 
+    public Manager getManagerById(Long id) {
+        return entityManager.find(Manager.class, id);
+    }
+
+    public Driver getDriverById(Long id) {
+        return entityManager.find(Driver.class, id);
+    }
+
+    public Station getStationById(Long id) {
+        return entityManager.find(Station.class, id);
+    }
+
 }

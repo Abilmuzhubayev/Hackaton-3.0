@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 @Data
 public class LocoAcceptanceDto {
-    private int id;
+    private Long id;
     private Timestamp time;
     private Double recuperationCounter;
     private Double electricCounter;

@@ -4,7 +4,9 @@ import com.asphyxia.routList.dto.SubtaskDto;
 import com.asphyxia.routList.entity.Subtask;
 import com.asphyxia.routList.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SubtaskConverter {
 
     @Autowired

@@ -1,7 +1,7 @@
 package com.asphyxia.routList.service;
 
 import com.asphyxia.routList.converters.LocoAcceptanceConverter;
-import com.asphyxia.routList.converters.LocoSubmissionCoverter;
+import com.asphyxia.routList.converters.LocoSubmissionConverter;
 import com.asphyxia.routList.converters.SubtaskConverter;
 import com.asphyxia.routList.dao.DriverDao;
 import com.asphyxia.routList.dto.LocoAcceptanceDto;
@@ -21,10 +21,11 @@ public class DriverService {
     DriverDao driverDao;
 
     @Autowired
-    LocoSubmissionCoverter locoSubmissionCoverter;
+    LocoSubmissionConverter locoSubmissionCoverter;
 
     @Autowired
     SubtaskConverter subtaskConverter;
+
    @Transactional
     public void saveLocoAcceptance(LocoAcceptanceDto locoAcceptanceDto) {
         LocoAcceptance locoAcceptance = LocoAcceptanceConverter.getEntity(locoAcceptanceDto);

@@ -17,6 +17,21 @@ public class StationDataConverter {
         return stationData;
     }
 
-
+    public StationDataDto getDto(StationData stationData) {
+        StationDataDto stationDataDto = new StationDataDto();
+        stationDataDto.setPlanId(stationData.getPlan().getId());
+        stationDataDto.setStationId(stationData.getStation().getId());
+        stationDataDto.setStationName(stationData.getStation().getName());
+        stationDataDto.setArrivalTime(stationData.getArrivalTime());
+        stationDataDto.setDepartureTime(stationData.getDepartureTime());
+        stationDataDto.setWeightNetto(stationData.getWeightNetto());
+        stationDataDto.setWeightBrutto(stationData.getWeightBrutto());
+        stationDataDto.setCisterns(stationData.getCisterns());
+        stationDataDto.setAxesComposition(stationData.getAxesComposition());
+        stationDataDto.setStatusId(stationData.getStatus().getId());
+        stationDataDto.setStatusName(stationData.getStatus().getStatusDescription());
+        stationDataDto.setOrderNumber(stationData.getOrderNumber());
+        return stationDataDto;
+    }
 
 }

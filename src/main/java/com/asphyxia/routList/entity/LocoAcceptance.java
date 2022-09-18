@@ -12,7 +12,7 @@ public class LocoAcceptance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "loco_acceptance_id")
-    private int id;
+    private Long id;
 
     @Column(name = "time")
     private Timestamp time;

@@ -45,4 +45,7 @@ public class StationData {
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private Status status;
 
+    @Column(name = "order_number")
+    private Integer orderNumber;
+
 }

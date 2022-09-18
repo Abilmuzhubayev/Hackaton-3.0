@@ -1,16 +1,13 @@
 package com.asphyxia.routList.converters;
 
-import com.asphyxia.routList.dto.LocoAcceptanceDto;
 import com.asphyxia.routList.dto.LocoSubmissionDto;
 import com.asphyxia.routList.entity.LocoSubmission;
 import com.asphyxia.routList.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
-public class LocoSubmissionCoverter {
+public class LocoSubmissionConverter {
 
     @Autowired
     DriverService driverService;

@@ -17,4 +17,11 @@ public class Status {
     @Column(name = "description")
     private String statusDescription;
 
+    public static String finished = "success";
+    public static String pending = "pending";
+    public static String inFuture = "future";
+
+    public Status() {
+        statusDescription = inFuture;
+    }
 }
