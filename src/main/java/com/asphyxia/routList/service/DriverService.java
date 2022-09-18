@@ -47,10 +47,8 @@ public class DriverService {
     }
 
     @Transactional
-    public void saveSubtask(SubtaskDto subtaskDto, Long planId) {
+    public void saveSubtask(SubtaskDto subtaskDto) {
        Subtask subtask = subtaskConverter.getEntity(subtaskDto);
-       Plan plan = driverDao.getPlanById(planId);
-       subtask.setPlan(plan);
        driverDao.saveSubtask(subtask);
     }
 

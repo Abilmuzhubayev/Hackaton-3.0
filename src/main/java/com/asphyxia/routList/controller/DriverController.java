@@ -57,10 +57,10 @@ public class DriverController {
     }
 
     @PostMapping("/saveSubtask")
-    public ResponseEntity<OperationResult> saveSubtask(@RequestBody SubtaskDto subtaskDto, @RequestParam Long planId) {
+    public ResponseEntity<OperationResult> saveSubtask(@RequestBody SubtaskDto subtaskDto) {
         OperationResult operationResult = new OperationResult();
         try {
-            driverService.saveSubtask(subtaskDto, planId);
+            driverService.saveSubtask(subtaskDto);
             operationResult.setIsSuccess(Boolean.TRUE);
             operationResult.setMessage("Информация успешно сохранена.");
         } catch (Exception e) {
