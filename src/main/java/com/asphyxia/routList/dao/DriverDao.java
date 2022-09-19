@@ -76,4 +76,21 @@ public class DriverDao {
         return routeId;
     }
 
+    public List<SafetyPrecaution> getSafetyPrecautions() {
+        Query query = entityManager.createQuery("from SafetyPrecaution");
+        List<SafetyPrecaution> codes = query.getResultList();
+        return codes;
+    }
+
+    public List<TechSpeed> getTechSpeeds() {
+        Query query = entityManager.createQuery("from TechSpeed");
+        List<TechSpeed> codes = query.getResultList();
+        return codes;
+    }
+
+    public List<FuelConsumption> getFuelConsumptions() {
+        Query query = entityManager.createQuery("from FuelConsumption");
+        List<FuelConsumption> codes = query.getResultList();
+        return codes;
+    }
 }

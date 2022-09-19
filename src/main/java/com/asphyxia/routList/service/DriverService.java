@@ -1,20 +1,16 @@
 package com.asphyxia.routList.service;
 
-import com.asphyxia.routList.converters.LocoAcceptanceConverter;
-import com.asphyxia.routList.converters.LocoSubmissionConverter;
-import com.asphyxia.routList.converters.StationDataConverter;
-import com.asphyxia.routList.converters.SubtaskConverter;
+import com.asphyxia.routList.converters.*;
 import com.asphyxia.routList.dao.DriverDao;
-import com.asphyxia.routList.dto.LocoAcceptanceDto;
-import com.asphyxia.routList.dto.LocoSubmissionDto;
-import com.asphyxia.routList.dto.StationDataDto;
-import com.asphyxia.routList.dto.SubtaskDto;
+import com.asphyxia.routList.dto.*;
 import com.asphyxia.routList.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DriverService {
@@ -30,6 +26,9 @@ public class DriverService {
 
     @Autowired
     StationDataConverter stationDataConverter;
+
+    @Autowired
+    CodeConverter codeConverter;
 
    @Transactional
     public void saveLocoAcceptance(LocoAcceptanceDto locoAcceptanceDto) {
@@ -89,4 +88,21 @@ public class DriverService {
     public List<TechSpeed> getTechSpeedsById(List<Long> id) {
         return driverDao.getTechSpeeds(id);
     }
+
+    @Transactional
+    public List<CodeDto> getFuelConsumptionCodes() {
+       return driverDao.getFuelConsumptions().stream().map(x -> codeConverter.getDto(x)).collect(Collectors.toList());
+
+    }
+
+    @Transactional
+    public List<CodeDto> getTechSpeedCodes() {
+        return driverDao.getTechSpeeds().stream().map(x -> codeConverter.getDto(x)).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<CodeDto> getSafetyPrecautionCodes() {
+        return driverDao.getSafetyPrecautions().stream().map(x -> codeConverter.getDto(x)).collect(Collectors.toList());
+    }
+
 }
