@@ -9,15 +9,23 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 
 @Service
+@Slf4j
 public class ReportService {
 
 
     public void generateReport(String[][] generalInfo, String[][] driverWorkInfo, String[][] intermediateInfo, String[][] locoInfo) throws Exception {
 
-        String path = "C:\\Users\\user\\Desktop\\instructions\\Second.pdf";
+        String path = "C:\\Users\\user\\IdeaProjects\\routList\\src\\main\\resources\\report\\report.pdf";
 
         PdfWriter pdfWriter = new PdfWriter(path);
 
@@ -118,6 +126,19 @@ public class ReportService {
 
 
         document.close();
+    }
+
+
+    public void addResource(Resource resource, HttpServletResponse response) {
+        try {
+            response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+            response.setHeader("Content-Disposition", "attachment; filename=" + resource.getFilename());
+            response.setContentLength((int) resource.contentLength());
+            InputStream inputStream = resource.getInputStream();
+            FileCopyUtils.copy(inputStream, response.getOutputStream());
+        } catch (Exception e) {
+            log.error("Exception in addResource: ", e);
+        }
     }
 
 }
