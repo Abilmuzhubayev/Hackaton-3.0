@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000/")
 @RequestMapping("/operator")
 @Slf4j
 public class OperatorController {
