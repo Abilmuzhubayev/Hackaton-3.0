@@ -115,7 +115,19 @@ public class DriverController {
         return managerService.getStationData(id);
     }
 
+    @GetMapping("getFuelConsumptionCodes")
+    public List<CodeDto> getFuelConsumptionCodes() {
+        return driverService.getFuelConsumptionCodes();
+    }
 
+    @GetMapping("getTechSpeedCodes")
+    public List<CodeDto> getTechSpeedCodes() {
+        return driverService.getTechSpeedCodes();
+    }
 
+    @GetMapping("getSafetyPrecautionCodes")
+    public List<CodeDto> getSafetyPrecautionCodes() {
+        return driverService.getSafetyPrecautionCodes();
+    }
 
 }

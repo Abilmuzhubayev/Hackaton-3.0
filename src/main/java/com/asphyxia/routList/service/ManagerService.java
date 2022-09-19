@@ -135,6 +135,8 @@ public class ManagerService {
         route.setDriver(driver);
         route.setDepartureStation(departureStation);
         route.setDestinationStation(destinationStation);
+        route.setDepartureTime(departureDataDto.getDepartureTime());
+        route.setDestinationTime(destinationDataDto.getArrivalTime());
         route.setStatus(Status.inFuture);
 
         //Plan
