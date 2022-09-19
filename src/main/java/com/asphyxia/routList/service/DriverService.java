@@ -59,6 +59,10 @@ public class DriverService {
     @Transactional
     public void saveStationData(StationDataDto stationDataDto) {
        StationData stationData = stationDataConverter.getEntity(stationDataDto);
+       Station station = driverDao.getStationById(stationDataDto.getStationId());
+       Plan plan = driverDao.getPlanById(stationDataDto.getPlanId());
+       stationData.setStation(station);
+       stationData.setPlan(plan);
        driverDao.saveStationData(stationData);
     }
 

@@ -3,6 +3,7 @@ package com.asphyxia.routList.converters;
 import com.asphyxia.routList.dto.StationDataDto;
 import com.asphyxia.routList.dto.SubtaskDto;
 import com.asphyxia.routList.entity.StationData;
+import com.asphyxia.routList.entity.Status;
 import com.asphyxia.routList.entity.Subtask;
 import org.springframework.stereotype.Component;
 
@@ -15,10 +16,14 @@ public class StationDataConverter {
     public StationData getEntity(StationDataDto stationDataDto) {
         StationData stationData = new StationData();
         stationData.setId(stationDataDto.getId());
+        stationData.setWeightNetto(stationDataDto.getWeightNetto());
+        stationData.setWeightBrutto(stationDataDto.getWeightBrutto());
         stationData.setCisterns(stationDataDto.getCisterns());
+        stationData.setAxesComposition(stationDataDto.getAxesComposition());
         stationData.setArrivalTime(stationDataDto.getArrivalTime());
         stationData.setDepartureTime(stationDataDto.getDepartureTime());
-        stationData.setArrivalTime(stationDataDto.getArrivalTime());
+        stationData.setOrderNumber(stationDataDto.getOrderNumber());
+        stationData.setStatus(Status.finished);
         return stationData;
     }
 
