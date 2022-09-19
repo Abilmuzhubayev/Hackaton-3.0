@@ -27,7 +27,7 @@ public class OperatorDao {
                     "inner join plan on plan.route_id = route.route_id " +
                     "inner join loco_submission on plan.plan_id = loco_submission.plan_id" +
                     " where (route.destination_id = ?1 and route.in_operator_id is null)" +
-                    " and loco_submission.status != ?2", Route.class).setParameter(1, stationId).setParameter(2, Status.finished).getResultList();
+                    " and loco_submission.status = ?2", Route.class).setParameter(1, stationId).setParameter(2, Status.finished).getResultList();
             return routes;
         }
 
