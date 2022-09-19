@@ -15,6 +15,7 @@ public class TaskConverter {
         taskDto.setTaskCategory("LocoAcceptance");
         taskDto.setName("Прием локомотива");
         taskDto.setStatus(locoAcceptance.getStatus());
+        taskDto.setTime(locoAcceptance.getTime());
         return taskDto;
     }
 
@@ -24,6 +25,7 @@ public class TaskConverter {
         taskDto.setTaskCategory("LocoSubmission");
         taskDto.setName("Сдача локомотива");
         taskDto.setStatus(locoSubmission.getStatus());
+        taskDto.setTime(locoSubmission.getTime());
         return taskDto;
     }
 
@@ -37,6 +39,7 @@ public class TaskConverter {
             taskDto.setName("Завершение работы");
         }
         taskDto.setStatus(subtask.getStatus());
+        taskDto.setTime(subtask.getTime());
         return taskDto;
     }
 
