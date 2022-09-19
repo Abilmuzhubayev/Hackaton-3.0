@@ -1,5 +1,6 @@
 package com.asphyxia.routList.controller;
 
+import com.asphyxia.routList.dao.ReportDao;
 import com.asphyxia.routList.service.ReportService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,15 @@ public class ReportController {
     private ReportService reportService;
 
     @Autowired
+    private ReportDao reportDao;
+
+    @Autowired
     private ResourceLoader resourceLoader;
 
     @GetMapping("/{id}")
     public void generateReportByRouteId(@PathVariable("id") Long routeId, HttpServletResponse response) {
         try {
-            reportService.generateReport(null, null, null, null);
+            reportService.generateReport(reportService.getRouteDetails(routeId), reportService.getDriverWorkDetails(routeId), reportService.getStationsData(routeId), null);
             String fileLocation = "classpath:report/report.pdf";
             Resource resource = resourceLoader.getResource(fileLocation);
             reportService.addResource(resource, response);
