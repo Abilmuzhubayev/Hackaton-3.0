@@ -1,5 +1,6 @@
 package com.asphyxia.routList.service;
 import com.asphyxia.routList.dao.ReportDao;
+import com.asphyxia.routList.entity.Route;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -29,7 +30,7 @@ public class ReportService {
     private ReportDao reportDao;
 
 
-    public void generateReport(List<List<String>> generalInfo, List<List<String>>  driverWorkInfo, List<List<String>> intermediateInfo, List<List<String>> locoInfo) throws Exception {
+    public void generateReport(List<List<String>> generalInfo, List<List<String>>  driverWorkInfo, List<List<String>> intermediateInfo, List<String> locoInfo) throws Exception {
 
         String path = "C:\\Users\\user\\IdeaProjects\\routList\\src\\main\\resources\\report\\report.pdf";
 
@@ -129,6 +130,10 @@ public class ReportService {
             locoDataTable.addCell(locoDataHeader[i]);
         }
 
+        for (String s : locoInfo) {
+            locoDataTable.addCell(s);
+        }
+
         locoDataTable.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
 
@@ -177,6 +182,10 @@ public class ReportService {
 
     public List<List<String>> getStationsData(Long routeId) {
         return reportDao.getStationData(routeId);
+    }
+
+    public List<String> getLocoData(Long routeId) {
+        return reportDao.getLocoData(routeId);
     }
 
 }

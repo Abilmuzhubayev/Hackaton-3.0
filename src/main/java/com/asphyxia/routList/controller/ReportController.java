@@ -36,7 +36,7 @@ public class ReportController {
     @GetMapping("/{id}")
     public void generateReportByRouteId(@PathVariable("id") Long routeId, HttpServletResponse response) {
         try {
-            reportService.generateReport(reportService.getRouteDetails(routeId), reportService.getDriverWorkDetails(routeId), reportService.getStationsData(routeId), null);
+            reportService.generateReport(reportService.getRouteDetails(routeId), reportService.getDriverWorkDetails(routeId), reportService.getStationsData(routeId), reportService.getLocoData(routeId));
             String fileLocation = "classpath:report/report.pdf";
             Resource resource = resourceLoader.getResource(fileLocation);
             reportService.addResource(resource, response);

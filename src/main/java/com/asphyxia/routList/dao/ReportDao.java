@@ -1,5 +1,7 @@
 package com.asphyxia.routList.dao;
 
+import com.asphyxia.routList.entity.LocoAcceptance;
+import com.asphyxia.routList.entity.LocoSubmission;
 import com.asphyxia.routList.entity.Route;
 import com.asphyxia.routList.entity.StationData;
 import org.apache.commons.lang3.StringUtils;
@@ -87,6 +89,21 @@ public class ReportDao {
             row.add(stationData.getWeightBrutto() == null ? "" : stationData.getWeightBrutto().toString());
             resultList.add(row);
         }
+        return resultList;
+    }
+
+    public List<String> getLocoData(Long routeId) {
+        Route route = entityManager.find(Route.class, routeId);
+        LocoAcceptance locoAcceptance = route.getPlan().getLocoAcceptance();
+        LocoSubmission locoSubmission = route.getPlan().getLocoSubmission();
+        List<String> resultList = new ArrayList<>();
+        resultList.add(locoAcceptance.getTime() == null ? "" : locoAcceptance.getTime().toString());
+        resultList.add(locoAcceptance.getElectricCounter() == null ? "" : locoAcceptance.getElectricCounter().toString());
+        resultList.add(locoAcceptance.getRecuperationCounter() == null ? " " : locoAcceptance.getRecuperationCounter().toString());
+        resultList.add(locoSubmission.getTime() == null ? " " : locoAcceptance.getTime().toString());
+        resultList.add(locoSubmission.getElectricCounter() == null ? " " : locoSubmission.getElectricCounter().toString());
+        resultList.add(locoSubmission.getRecuperationCounter() == null ? " " : locoSubmission.getRecuperationCounter().toString());
+        resultList.add("");
         return resultList;
     }
 }
