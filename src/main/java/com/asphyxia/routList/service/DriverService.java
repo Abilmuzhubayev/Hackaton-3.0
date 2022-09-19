@@ -5,7 +5,6 @@ import com.asphyxia.routList.converters.LocoSubmissionConverter;
 import com.asphyxia.routList.converters.StationDataConverter;
 import com.asphyxia.routList.converters.SubtaskConverter;
 import com.asphyxia.routList.dao.DriverDao;
-import com.asphyxia.routList.dao.ManagerDao;
 import com.asphyxia.routList.dto.LocoAcceptanceDto;
 import com.asphyxia.routList.dto.LocoSubmissionDto;
 import com.asphyxia.routList.dto.StationDataDto;
@@ -24,7 +23,7 @@ public class DriverService {
     DriverDao driverDao;
 
     @Autowired
-    LocoSubmissionConverter locoSubmissionCoverter;
+    LocoSubmissionConverter locoSubmissionConverter;
 
     @Autowired
     SubtaskConverter subtaskConverter;
@@ -35,17 +34,17 @@ public class DriverService {
    @Transactional
     public void saveLocoAcceptance(LocoAcceptanceDto locoAcceptanceDto) {
         LocoAcceptance locoAcceptance = LocoAcceptanceConverter.getEntity(locoAcceptanceDto);
-       System.out.println("\n\n\n" + locoAcceptanceDto + "\n\n\n");
         locoAcceptance.setPlan(driverDao.getPlanById(locoAcceptanceDto.getPlanId()));
         driverDao.saveLocoAcceptance(locoAcceptance);
     }
 
     @Transactional
     public void saveLocoSubmission(LocoSubmissionDto locoSubmissionDto) {
-       LocoSubmission locoSubmission = locoSubmissionCoverter.getEntity(locoSubmissionDto);
+       LocoSubmission locoSubmission = locoSubmissionConverter.getEntity(locoSubmissionDto);
        locoSubmission.setSafetyPrecautions(getSafetyPrecautionsById(locoSubmissionDto.getPrecautionsId()));
        locoSubmission.setFuelConsumptions(getFuelConsumptionsById(locoSubmissionDto.getConsumptionsId()));
        locoSubmission.setTechSpeeds(getTechSpeedsById(locoSubmissionDto.getSpeedsId()));
+       locoSubmission.setPlan(driverDao.getPlanById(locoSubmissionDto.getPlanId()));
        driverDao.saveLocoSubmission(locoSubmission);
     }
 
@@ -70,6 +69,7 @@ public class DriverService {
     public Plan getPlanById(Long id) {
        return driverDao.getPlanById(id);
     }
+
     @Transactional
     public List<SafetyPrecaution> getSafetyPrecautionsById(List<Long> id) {
        return driverDao.getSafetyPrecautionById(id);

@@ -2,6 +2,7 @@ package com.asphyxia.routList.converters;
 
 import com.asphyxia.routList.dto.LocoSubmissionDto;
 import com.asphyxia.routList.entity.LocoSubmission;
+import com.asphyxia.routList.entity.Status;
 import com.asphyxia.routList.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ public class LocoSubmissionConverter {
         locoSubmission.setTime(locoSubmissionDto.getTime());
         locoSubmission.setElectricCounter(locoSubmissionDto.getElectricCounter());
         locoSubmission.setRecuperationCounter(locoSubmissionDto.getRecuperationCounter());
+        locoSubmission.setStatus(Status.finished);
         return locoSubmission;
     }
 
@@ -26,6 +28,8 @@ public class LocoSubmissionConverter {
         locoSubmissionDto.setPrecautionsId(locoSubmission.getSafetyIds());
         locoSubmissionDto.setSpeedsId(locoSubmission.getSpeedIds());
         locoSubmissionDto.setConsumptionsId(locoSubmission.getConsumptionIds());
+        locoSubmissionDto.setStatus(locoSubmission.getStatus());
+        locoSubmissionDto.setPlanId(locoSubmission.getPlan().getId());
         return locoSubmissionDto;
     }
 
