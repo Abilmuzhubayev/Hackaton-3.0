@@ -14,4 +14,6 @@ public class LocoSubmissionDto {
     private List<Long> precautionsId;
     private List<Long> consumptionsId;
     private List<Long> speedsId;
+    private String status;
+    private Long planId;
 }

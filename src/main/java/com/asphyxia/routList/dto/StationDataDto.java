@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 
 @Data
 public class StationDataDto {
+    private Long id;
     private Long planId;
     private Long stationId;
     private String stationName;
@@ -15,7 +16,6 @@ public class StationDataDto {
     private Double weightBrutto;
     private Integer cisterns;
     private Integer axesComposition;
-    private Long statusId;
     private String statusName;
     private Integer orderNumber;
 }

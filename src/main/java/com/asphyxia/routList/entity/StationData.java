@@ -15,7 +15,7 @@ public class StationData {
     @Column(name = "station_data_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
     private Plan plan;
 
@@ -41,9 +41,8 @@ public class StationData {
     @Column(name = "axes_composition")
     private Integer axesComposition;
 
-    @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "status_id")
-    private Status status;
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "order_number")
     private Integer orderNumber;

@@ -9,7 +9,6 @@ public class SubtaskDto {
     private Long id;
     private String category;
     private Timestamp time;
-    private Long statusId;
     private Long planId;
-    private int confirmed;
+    private String status;
 }

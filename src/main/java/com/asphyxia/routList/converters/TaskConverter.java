@@ -14,7 +14,8 @@ public class TaskConverter {
         taskDto.setTaskId(locoAcceptance.getId());
         taskDto.setTaskCategory("LocoAcceptance");
         taskDto.setName("Прием локомотива");
-        taskDto.setStatus(locoAcceptance.getStatus().getStatusDescription());
+        taskDto.setStatus(locoAcceptance.getStatus());
+        taskDto.setTime(locoAcceptance.getTime());
         return taskDto;
     }
 
@@ -23,7 +24,8 @@ public class TaskConverter {
         taskDto.setTaskId(locoSubmission.getId());
         taskDto.setTaskCategory("LocoSubmission");
         taskDto.setName("Сдача локомотива");
-        taskDto.setStatus(locoSubmission.getStatus().getStatusDescription());
+        taskDto.setStatus(locoSubmission.getStatus());
+        taskDto.setTime(locoSubmission.getTime());
         return taskDto;
     }
 
@@ -34,9 +36,10 @@ public class TaskConverter {
         if (subtask.getCategory().equals("arrival")) {
             taskDto.setName("Явка на работу");
         } else {
-            taskDto.setName("завершение работы");
+            taskDto.setName("Завершение работы");
         }
-        taskDto.setStatus(subtask.getStatus().getStatusDescription());
+        taskDto.setStatus(subtask.getStatus());
+        taskDto.setTime(subtask.getTime());
         return taskDto;
     }
 
@@ -45,7 +48,14 @@ public class TaskConverter {
         taskDto.setTaskId(stationData.getId());
         taskDto.setTaskCategory("StationData");
         taskDto.setName("Станция " + stationData.getStation().getName());
-        taskDto.setStatus(stationData.getStatus().getStatusDescription());
+
+        if (stationData.getOrderNumber() == 1) {
+            taskDto.setTime(stationData.getDepartureTime());
+        } else {
+            taskDto.setTime(stationData.getArrivalTime());
+        }
+
+        taskDto.setStatus(stationData.getStatus());
         return taskDto;
     }
 }

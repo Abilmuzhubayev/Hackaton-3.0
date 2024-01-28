@@ -13,6 +13,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000/")
 @RequestMapping("/manager")
 @Slf4j
 public class ManagerController {
@@ -100,7 +101,7 @@ public class ManagerController {
         } catch (Exception e) {
             log.error("Exception in saveRoute: ", e);
             operationResult.setIsSuccess(Boolean.FALSE);
-            operationResult.setMessage("Возникла ошибка при составлений маршрута.");
+            operationResult.setMessage("Возникла ошибка при составлении маршрута.");
             return ResponseEntity.internalServerError().body(operationResult);
         }
         return ResponseEntity.ok(operationResult);

@@ -37,14 +37,12 @@ public class ManagerService {
 
     @Transactional
     public List<RouteCardDto> getRoutes(Long managerId) {
-        List<Route> routes = managerDao.getRoutes(managerId);
+        Manager manager = managerDao.getManagerById(managerId);
+
+        List<Route> routes = manager.getRouteList();
         List<RouteCardDto> routeCardDtos = new ArrayList<>();
         for (Route route : routes) {
             RouteCardDto routeCardDto = routeConverter.getDto(route);
-            routeCardDto.setDepartureTime(managerDao.getDepartureTime(route.getId()));
-            routeCardDto.setDriverName(managerDao.getDriverName(route.getId()));
-            routeCardDto.setDestinationStation(managerDao.getDestinationStation(route.getId()));
-            routeCardDto.setDepartureStation(managerDao.getDepartureStation(route.getId()));
             routeCardDtos.add(routeCardDto);
         }
         return routeCardDtos;
@@ -110,11 +108,14 @@ public class ManagerService {
     @Transactional
     public RouteDetailsDto getRouteDetails(Long routeId) {
         RouteDetailsDto routeDetailsDto = new RouteDetailsDto();
-        routeDetailsDto.setDriverName(managerDao.getDriverName(routeId));
-        routeDetailsDto.setDepartureName(managerDao.getDepartureStation(routeId));
-        routeDetailsDto.setDepartureTime(managerDao.getDepartureTime(routeId));
-        routeDetailsDto.setDestinationName(managerDao.getDestinationStation(routeId));
-        routeDetailsDto.setDestinationTime(managerDao.getDestinationTime(routeId));
+        Route route = managerDao.getRoute(routeId);
+
+        routeDetailsDto.setDriverName(route.getDriver().getUser().getName());
+        routeDetailsDto.setDepartureName(route.getDepartureStation().getName());
+        routeDetailsDto.setDepartureTime(route.getDepartureTime());
+        routeDetailsDto.setDestinationName(route.getDestinationStation().getName());
+        routeDetailsDto.setDestinationTime(route.getDestinationTime());
+        routeDetailsDto.setStopsCount(route.getStationDataList().size());
         return routeDetailsDto;
     }
 
@@ -122,8 +123,6 @@ public class ManagerService {
     public void saveRoute(CreateRouteDto createRouteDto) {
         Manager manager = managerDao.getManagerById(createRouteDto.getManagerId());
         Driver driver = managerDao.getDriverById(createRouteDto.getDriverId());
-        Status status = new Status();
-        status.setStatusDescription(Status.inFuture);
 
         List<CreateStationDataDto> createStationDataDtoList = createRouteDto.getStationDataDtoList();
         CreateStationDataDto departureDataDto = createStationDataDtoList.get(0);
@@ -136,23 +135,34 @@ public class ManagerService {
         route.setDriver(driver);
         route.setDepartureStation(departureStation);
         route.setDestinationStation(destinationStation);
-        route.setStatus(status);
+        route.setDepartureTime(departureDataDto.getDepartureTime());
+        route.setDestinationTime(destinationDataDto.getArrivalTime());
+        route.setStatus(Status.inFuture);
+
+        //Plan
+        Plan plan = new Plan();
 
         // locoAcceptance
         LocoAcceptance locoAcceptance = new LocoAcceptance();
-        locoAcceptance.setStatus(new Status());
+        locoAcceptance.setStatus(Status.inFuture);
+        locoAcceptance.setPlan(plan);
 
         // locoSubmission
         LocoSubmission locoSubmission = new LocoSubmission();
-        locoSubmission.setStatus(new Status());
+        locoSubmission.setStatus(Status.inFuture);
+        locoSubmission.setPlan(plan);
 
         // arrival subtask
         Subtask arrivalSubtask = new Subtask();
-        arrivalSubtask.setStatus(new Status());
+        arrivalSubtask.setStatus(Status.inFuture);
+        arrivalSubtask.setPlan(plan);
+        arrivalSubtask.setCategory("arrival");
 
         // finish subtask
         Subtask finishSubtask = new Subtask();
-        finishSubtask.setStatus(new Status());
+        finishSubtask.setStatus(Status.inFuture);
+        finishSubtask.setPlan(plan);
+        finishSubtask.setCategory("finish");
 
         // List<Subtask>
         List<Subtask> subtaskList = new ArrayList<>();
@@ -169,7 +179,8 @@ public class ManagerService {
             stationData.setStation(station);
             stationData.setArrivalTime(dto.getArrivalTime());
             stationData.setDepartureTime(dto.getDepartureTime());
-            stationData.setStatus(new Status());
+            stationData.setStatus(Status.inFuture);
+            stationData.setPlan(plan);
             stationData.setOrderNumber(orderNumber);
 //            stationData.setWeightNetto();
 //            stationData.setWeightBrutto();
@@ -181,13 +192,13 @@ public class ManagerService {
         }
 
         // plan
-        Plan plan = new Plan();
         plan.setRoute(route);
         plan.setLocoAcceptance(locoAcceptance);
         plan.setLocoSubmission(locoSubmission);
         plan.setSubtaskList(subtaskList);
         plan.setStationDataList(stationDataList);
 
+        route.setPlan(plan);
         managerDao.saveRoute(route);
     }
 
@@ -196,7 +207,7 @@ public class ManagerService {
         List<Driver> drivers = managerDao.getDrivers();
         List<DriverDto> driverDtoList = new ArrayList<>();
         for (Driver driver : drivers) {
-            String driverName = managerDao.getDriverNameByDriverId(driver.getId());
+            String driverName = driver.getUser().getName();
             DriverDto driverDto = driverConverter.getDto(driver, driverName);
             driverDtoList.add(driverDto);
         }

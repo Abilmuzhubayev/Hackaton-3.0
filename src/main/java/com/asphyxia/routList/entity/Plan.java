@@ -14,21 +14,19 @@ public class Plan {
     @Column(name = "plan_id")
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id", referencedColumnName = "route_id")
     private Route route;
 
-    @OneToOne
-    @JoinColumn(name = "local_acceptance_id", referencedColumnName = "loco_acceptance_id")
+    @OneToOne(mappedBy = "plan", cascade = CascadeType.ALL)
     private LocoAcceptance locoAcceptance;
 
-    @OneToOne
-    @JoinColumn(name = "loco_submission_id", referencedColumnName = "loco_submission_id")
+    @OneToOne(mappedBy = "plan", cascade = CascadeType.ALL)
     private LocoSubmission locoSubmission;
 
-    @OneToMany(mappedBy = "plan")
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL)
     private List<Subtask> subtaskList;
 
-    @OneToMany(mappedBy = "plan")
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL)
     private List<StationData> stationDataList;
 }

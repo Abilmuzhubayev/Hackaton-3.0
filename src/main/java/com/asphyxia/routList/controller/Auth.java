@@ -5,10 +5,12 @@ import com.asphyxia.routList.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
+@CrossOrigin(origins = "http://localhost:3000/")
 @Controller
 @RequestMapping("/auth")
 public class Auth {

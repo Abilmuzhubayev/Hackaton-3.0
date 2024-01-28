@@ -14,7 +14,8 @@ public class Driver {
     @Column(name = "driver_id")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
 
 }

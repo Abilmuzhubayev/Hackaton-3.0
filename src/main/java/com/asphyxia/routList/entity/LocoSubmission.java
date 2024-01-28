@@ -13,8 +13,13 @@ import java.util.List;
 @Data
 public class LocoSubmission {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "loco_submission_id")
     private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
+    private Plan plan;
 
     @Column(name = "time")
     private Timestamp time;
@@ -46,9 +51,8 @@ public class LocoSubmission {
             inverseJoinColumns = @JoinColumn(name = "speed_id"))
     private List<TechSpeed> techSpeeds;
 
-    @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "status_id")
-    private Status status;
+    @Column(name = "status")
+    private String status;
 
     public List<Long> getSafetyIds() {
         List<Long> safetyIds = new ArrayList<>();

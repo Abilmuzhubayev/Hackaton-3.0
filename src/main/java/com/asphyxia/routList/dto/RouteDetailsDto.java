@@ -11,5 +11,5 @@ public class RouteDetailsDto {
     private String destinationName;
     private Timestamp departureTime;
     private Timestamp destinationTime;
-    private String stopsCount;
+    private Integer stopsCount;
 }

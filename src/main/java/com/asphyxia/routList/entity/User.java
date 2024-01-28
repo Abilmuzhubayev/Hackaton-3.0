@@ -33,4 +33,8 @@ public class User {
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
+    public String getName() {
+        return this.firstname + " " + this.lastname;
+    }
+
 }

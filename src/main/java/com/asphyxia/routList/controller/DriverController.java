@@ -2,6 +2,7 @@ package com.asphyxia.routList.controller;
 
 import com.asphyxia.routList.dto.*;
 import com.asphyxia.routList.entity.LocoSubmission;
+import com.asphyxia.routList.entity.StationData;
 import com.asphyxia.routList.service.DriverService;
 import com.asphyxia.routList.service.ManagerService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000/")
 @RequestMapping("/driver")
 @Slf4j
 public class DriverController {
@@ -23,7 +25,7 @@ public class DriverController {
     ManagerService managerService;
 
     @PostMapping("/saveLocoAcceptance")
-    public ResponseEntity<OperationResult> saveLocoAcceptance(LocoAcceptanceDto locoAcceptanceDto) {
+    public ResponseEntity<OperationResult> saveLocoAcceptance(@RequestBody LocoAcceptanceDto locoAcceptanceDto) {
         OperationResult operationResult = new OperationResult();
         try {
             driverService.saveLocoAcceptance(locoAcceptanceDto);
@@ -39,7 +41,7 @@ public class DriverController {
     }
 
     @PostMapping("/saveLocoSubmission")
-    public ResponseEntity<OperationResult> saveLocoSubmission(LocoSubmissionDto locoSubmissionDto) {
+    public ResponseEntity<OperationResult> saveLocoSubmission(@RequestBody LocoSubmissionDto locoSubmissionDto) {
         OperationResult operationResult = new OperationResult();
         try {
             driverService.saveLocoSubmission(locoSubmissionDto);
@@ -55,10 +57,10 @@ public class DriverController {
     }
 
     @PostMapping("/saveSubtask")
-    public ResponseEntity<OperationResult> saveSubtask(@RequestBody SubtaskDto subtaskDto, @RequestParam Long planId) {
+    public ResponseEntity<OperationResult> saveSubtask(@RequestBody SubtaskDto subtaskDto) {
         OperationResult operationResult = new OperationResult();
         try {
-            driverService.saveSubtask(subtaskDto, planId);
+            driverService.saveSubtask(subtaskDto);
             operationResult.setIsSuccess(Boolean.TRUE);
             operationResult.setMessage("Информация успешно сохранена.");
         } catch (Exception e) {
@@ -71,7 +73,7 @@ public class DriverController {
     }
 
     @PostMapping("/saveStationData")
-    public ResponseEntity<OperationResult> saveStationData(StationDataDto saveStationDto) {
+    public ResponseEntity<OperationResult> saveStationData(@RequestBody StationDataDto saveStationDto) {
         OperationResult operationResult = new OperationResult();
         try {
             driverService.saveStationData(saveStationDto);
@@ -89,10 +91,11 @@ public class DriverController {
     @GetMapping("/getTasks/{id}")
     public List<TaskDto> getRouteTasks(@PathVariable("id") Long driverId) {
         Long routeId = driverService.getRouteIdByDriverId(driverId);
+        System.out.println(routeId);
         return managerService.getRouteTasks(routeId);
     }
 
-    @GetMapping("/getLocoSubmissions/{id}")
+    @GetMapping("/getLocoSubmission/{id}")
     public LocoSubmissionDto getLocoSubmission(@PathVariable("id") Long id) {
         return managerService.getLocoSubmission(id);
     }
@@ -102,6 +105,29 @@ public class DriverController {
         return managerService.getRouteSubtask(subtaskId);
     }
 
+    @GetMapping("getLocoAcceptance/{id}")
+    public LocoAcceptanceDto getLocoAcceptance(@PathVariable("id") Long id) {
+        return managerService.getLocoAcceptance(id);
+    }
 
+    @GetMapping("getStationData/{id}")
+    public StationDataDto getStationData(@PathVariable("id") Long id) {
+        return managerService.getStationData(id);
+    }
+
+    @GetMapping("getFuelConsumptionCodes")
+    public List<CodeDto> getFuelConsumptionCodes() {
+        return driverService.getFuelConsumptionCodes();
+    }
+
+    @GetMapping("getTechSpeedCodes")
+    public List<CodeDto> getTechSpeedCodes() {
+        return driverService.getTechSpeedCodes();
+    }
+
+    @GetMapping("getSafetyPrecautionCodes")
+    public List<CodeDto> getSafetyPrecautionCodes() {
+        return driverService.getSafetyPrecautionCodes();
+    }
 
 }
